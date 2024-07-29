@@ -35,6 +35,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -123,7 +124,13 @@ int main(void)
   MX_TIM1_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  FLASH_OBProgramInitTypeDef option_bytes;
+  HAL_FLASHEx_OBGetConfig(&option_bytes);
+  // Set RDPLevel
+  option_bytes.RDPLevel = OB_RDP_LEVEL_0;
+  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin, GPIO_PIN_SET);
+  HAL_FLASHEx_OBProgram(&option_bytes);
+  HAL_FLASHEx_OBGetConfig(&option_bytes);
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -157,8 +164,22 @@ int main(void)
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+//  FLASH_OBProgramInitTypeDef option_bytes;
+//  HAL_FLASHEx_OBGetConfig(&option_bytes);
+//  // Set RDPLevel
+//  option_bytes.RDPLevel = OB_RDP_LEVEL_0;
+//  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin, GPIO_PIN_SET);
+//  HAL_FLASHEx_OBProgram(&option_bytes);
+//  HAL_FLASHEx_OBGetConfig(&option_bytes);
   while (1)
-  {
+  {    
+     if (GPIO_PIN_SET == HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin))
+     {
+        option_bytes.RDPLevel = OB_RDP_LEVEL_0;
+        HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin, GPIO_PIN_SET);
+        HAL_FLASHEx_OBProgram(&option_bytes);
+     }
+         
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
