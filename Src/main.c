@@ -127,10 +127,19 @@ int main(void)
   FLASH_OBProgramInitTypeDef option_bytes;
   HAL_FLASHEx_OBGetConfig(&option_bytes);
   // Set RDPLevel
-  option_bytes.RDPLevel = OB_RDP_LEVEL_0;
-  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin, GPIO_PIN_SET);
-  HAL_FLASHEx_OBProgram(&option_bytes);
-  HAL_FLASHEx_OBGetConfig(&option_bytes);
+//  option_bytes.RDPLevel = OB_RDP_LEVEL_1;
+//  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin, GPIO_PIN_SET);
+//  HAL_FLASHEx_OBProgram(&option_bytes);
+//  HAL_FLASHEx_OBGetConfig(&option_bytes);
+  while (1)
+  {
+     if (GPIO_PIN_SET == HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin))
+     {
+        option_bytes.RDPLevel = OB_RDP_LEVEL_1;
+        HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin, GPIO_PIN_SET);
+        HAL_FLASHEx_OBProgram(&option_bytes);
+     }     
+  }
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -173,12 +182,7 @@ int main(void)
 //  HAL_FLASHEx_OBGetConfig(&option_bytes);
   while (1)
   {    
-     if (GPIO_PIN_SET == HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin))
-     {
-        option_bytes.RDPLevel = OB_RDP_LEVEL_0;
-        HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin, GPIO_PIN_SET);
-        HAL_FLASHEx_OBProgram(&option_bytes);
-     }
+
          
     /* USER CODE END WHILE */
 
