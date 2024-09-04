@@ -28,6 +28,8 @@
 
 "--drv_swo_clock_setup=180000000,0,2000000" 
 
+"--drv_vector_table_base=0x08000000" 
+
 
 
 
