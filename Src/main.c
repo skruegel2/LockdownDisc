@@ -134,7 +134,7 @@ int main(void)
   option_bytes.OptionType = OPTIONBYTE_RDP;
   option_bytes.RDPLevel = OB_RDP_LEVEL_1;
   HAL_FLASHEx_OBProgram(&option_bytes);
-   HAL_FLASH_OB_Launch();  
+//   HAL_FLASH_OB_Launch();  
    HAL_FLASH_OB_Lock();
    HAL_FLASH_Lock();  
   HAL_FLASHEx_OBGetConfig(&option_bytes);
@@ -148,18 +148,17 @@ int main(void)
      {
         option_bytes.OptionType = OPTIONBYTE_RDP;
         option_bytes.RDPLevel = OB_RDP_LEVEL_0;
-        HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin, GPIO_PIN_SET);
          HAL_FLASH_Unlock();
          HAL_FLASH_OB_Unlock();        
         HAL_FLASHEx_OBProgram(&option_bytes);
         HAL_FLASH_OB_Launch();  
    HAL_FLASH_OB_Lock();
    HAL_FLASH_Lock();
-//        HAL_FLASHEx_OBGetConfig(&option_bytes);        
-//        if (option_bytes.RDPLevel == OB_RDP_LEVEL_0)
-//        {
-//          HAL_GPIO_WritePin(GPIOG, LD4_Pin, GPIO_PIN_SET);     
-//        }         
+        HAL_FLASHEx_OBGetConfig(&option_bytes);        
+        if (option_bytes.RDPLevel == OB_RDP_LEVEL_0)
+        {
+          HAL_GPIO_WritePin(GPIOG, LD4_Pin, GPIO_PIN_SET);     
+        }         
      }     
   }
   /* USER CODE END 2 */
